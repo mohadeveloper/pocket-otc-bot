@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pocket Option OTC Bot</title>
+    <style>
+        body { background-color: #060d14; color: white; font-family: sans-serif; padding: 15px; margin: 0; }
+        .header { text-align: center; color: #00ff88; font-weight: bold; padding: 10px; border-bottom: 1px solid #1c2a38; }
+        
+        /* Box-yada Signal-ka */
+        .box { background: #0b1620; border-radius: 15px; padding: 15px; margin-top: 15px; border: 1px solid #1c2a38; }
+        .correction { border-left: 5px solid #ffcc00; }
+        .ultra { border: 2px solid #00ff88; box-shadow: 0 0 10px rgba(0, 255, 136, 0.1); }
+
+        .title { font-size: 12px; color: #556677; margin-bottom: 5px; display: flex; justify-content: space-between; }
+        .pair { font-size: 22px; font-weight: bold; margin: 5px 0; }
+        
+        .info { display: flex; justify-content: space-between; margin-top: 10px; font-size: 13px; }
+        .winrate { color: #00ff88; font-weight: bold; }
+        
+        .btn { width: 100%; padding: 12px; border-radius: 8px; border: none; font-weight: bold; margin-top: 10px; cursor: pointer; }
+        .btn-corr { background: #ffcc00; color: #000; }
+        .btn-ultra { background: #00ff88; color: #000; }
+
+        /* Scanner-ka Pairs-ka */
+        .scanner { margin-top: 20px; background: #0b1620; border-radius: 10px; padding: 10px; }
+        .pair-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1c2a38; font-size: 14px; }
+        .status { color: #00ff88; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">OTC ALGORITHM V1</div>
+
+    <div class="box correction">
+        <div class="title"><span>CORRECTION MODE</span> <span style="color:#ffcc00;">● 5-6 CANDLES</span></div>
+        <div class="pair" id="corr-pair">EUR / USD (OTC)</div>
+        <div class="info">
+            <span>Accuracy: <span class="winrate" style="color:#ffcc00;">90%</span></span>
+            <span>Time: <b>1 MIN</b></span>
+        </div>
+        <button class="btn btn-corr" onclick="scanPair('correction')">GENERATE CORRECTION</button>
+    </div>
+
+    <div class="box ultra">
+        <div class="title"><span>ULTRA HIGHEST</span> <span style="color:#00ff88;">● 7-8 CANDLES</span></div>
+        <div class="pair" id="ultra-pair">GBP / USD (OTC)</div>
+        <div class="info">
+            <span>Accuracy: <span class="winrate">95.8%</span></span>
+            <span>Time: <b>5 MIN</b></span>
+        </div>
+        <button class="btn btn-ultra" onclick="scanPair('ultra')">GENERATE ULTRA WIN</button>
+    </div>
+
+    <div class="scanner">
+        <div style="font-size: 12px; color: #556677; margin-bottom: 10px;">LIVE OTC SCANNER (ALL PAIRS)</div>
+        <div id="pair-list">
+            <div class="pair-item"><span>AUD/CAD (OTC)</span> <span class="status">4 Candles...</span></div>
+            <div class="pair-item"><span>USD/JPY (OTC)</span> <span class="status">Waiting...</span></div>
+        </div>
+    </div>
+
+    <script>
+        const pairs = ["EUR/USD (OTC)", "GBP/USD (OTC)", "AUD/CAD (OTC)", "USD/JPY (OTC)", "NZD/USD (OTC)"];
+
+        function scanPair(type) {
+            let randomPair = pairs[Math.floor(Math.random() * pairs.length)];
+            if(type === 'correction') {
+                document.getElementById('corr-pair').innerText = randomPair;
+                alert("Correction Signal Found: " + randomPair + "\nDirection: SELL\nWait for candle 6!");
+            } else {
+                document.getElementById('ultra-pair').innerText = randomPair;
+                alert("ULTRA Signal Found: " + randomPair + "\nDirection: BUY\nWait for candle 8!");
+            }
+        }
+    </script>
+</body>
+</html>
